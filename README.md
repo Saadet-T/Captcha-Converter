@@ -20,5 +20,5 @@ If you have any error from the data the JLabel will look like this ;
 
 =========================================================================================
 
- <a href="https://www.linkedin.com/in/saadet-elif"/>Linkedin</a>
+ <a href="https://www.linkedin.com/in/saadet-elif"/>Linkedin</a><br>
  Developed By : LzzapS3c
