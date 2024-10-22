@@ -1,6 +1,4 @@
 CaptchaConvertorExtension.class
-ExtensionUnload.class
-ResponseClass.class
 CaptchaConvertorExtension$CaptchaConvert.class
 CaptchaConvertorExtension$CaptchaTab.class
 ImageClass.class
