@@ -15,8 +15,6 @@ import java.util.regex.Pattern;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,6 +22,7 @@ import burp.api.montoya.BurpExtension;
 import burp.api.montoya.MontoyaApi;
 import burp.api.montoya.core.ByteArray;
 import burp.api.montoya.http.message.HttpRequestResponse;
+import burp.api.montoya.http.message.MimeType;
 import burp.api.montoya.http.message.responses.HttpResponse;
 import burp.api.montoya.ui.Selection;
 import burp.api.montoya.ui.editor.EditorOptions;
@@ -75,32 +74,16 @@ public class CaptchaConvertorExtension implements BurpExtension  {
 		}
 
 
-		CaptchaConvert(MontoyaApi api, EditorCreationContext creationContext) {//Hey you If you are reading this to develop your own extension
+		CaptchaConvert(MontoyaApi api, EditorCreationContext creationContext) {
 				responseEditor = api.userInterface().createRawEditor(EditorOptions.READ_ONLY);
 		}
 
 		@Override
-		public boolean isEnabledFor(HttpRequestResponse requestResponse) {//Enabling CaptchaConverter Tab if response contains JSON data
-			ObjectMapper objectMapper = new ObjectMapper();
-			ByteArray responseBody = requestResponse.response().body();
-			HttpResponse response = requestResponse.response();
-			try {
-				jSON = objectMapper.readTree(responseBody.toString());
-			} catch (JsonMappingException e) {
-				Outerapi.logging().logToError(e);
-			} catch (JsonProcessingException e) {
-				Outerapi.logging().logToError(e);
-			}
-			String imageData = jSON.toString();
-			try {
-				jSON = objectMapper.readTree(responseBody.toString());
-			} catch (JsonMappingException e) {
-				Outerapi.logging().logToError(e);
-			} catch (JsonProcessingException e) {
-				Outerapi.logging().logToError(e);
-			}
-			Matcher matcher = pattern.matcher(imageData);//Matching the pattern
-			return (response.inferredMimeType().toString() == "JSON" || response.statedMimeType().toString() == "JSON") && pattern.matcher(response.bodyToString()).find();
+		public boolean isEnabledFor(HttpRequestResponse httpRequestResponse)
+		{
+		    HttpResponse response = httpRequestResponse.response();
+
+		    return (response.inferredMimeType() == MimeType.JSON || response.statedMimeType() == MimeType.JSON) && pattern.matcher(response.bodyToString()).find();
 		}
 
 		@Override
