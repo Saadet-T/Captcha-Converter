@@ -24,7 +24,6 @@ import burp.api.montoya.BurpExtension;
 import burp.api.montoya.MontoyaApi;
 import burp.api.montoya.core.ByteArray;
 import burp.api.montoya.http.message.HttpRequestResponse;
-import burp.api.montoya.http.message.MimeType;
 import burp.api.montoya.http.message.responses.HttpResponse;
 import burp.api.montoya.ui.Selection;
 import burp.api.montoya.ui.editor.EditorOptions;
@@ -84,24 +83,23 @@ public class CaptchaConvertorExtension implements BurpExtension  {
 		public boolean isEnabledFor(HttpRequestResponse requestResponse) {//Enabling CaptchaConverter Tab if response contains JSON data
 			ObjectMapper objectMapper = new ObjectMapper();
 			ByteArray responseBody = requestResponse.response().body();
-			HttpResponse response = requestResponse.response();
 			try {
 				jSON = objectMapper.readTree(responseBody.toString());
 			} catch (JsonMappingException e) {
-				Outerapi.logging().logToError(e);
+				e.printStackTrace();
 			} catch (JsonProcessingException e) {
-				Outerapi.logging().logToError(e);
+				e.printStackTrace();
 			}
 			String imageData = jSON.toString();
 			try {
 				jSON = objectMapper.readTree(responseBody.toString());
 			} catch (JsonMappingException e) {
-				Outerapi.logging().logToError(e);
+				e.printStackTrace();
 			} catch (JsonProcessingException e) {
-				Outerapi.logging().logToError(e);
+				e.printStackTrace();
 			}
 			Matcher matcher = pattern.matcher(imageData);//Matching the pattern
-			return (response.inferredMimeType().toString() == "JSON" || response.statedMimeType().toString() == "JSON") && pattern.matcher(response.bodyToString()).find();
+			return (matcher.find());
 		}
 
 		@Override
@@ -115,7 +113,7 @@ public class CaptchaConvertorExtension implements BurpExtension  {
 				this.responseEditor.setContents(prettyResponse.toByteArray());
 				imageRender();//calling the method of imageRender
 			} catch (IOException e) {
-				Outerapi.logging().logToError(e);
+				e.printStackTrace();
 			}
 			
 		}
