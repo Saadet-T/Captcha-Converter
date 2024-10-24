@@ -19,12 +19,5 @@ And TA DA;
 
 ![image](https://github.com/user-attachments/assets/f4bc4091-cb3e-41c1-a8ac-c39ab178eacc)
 
-
-If you have any error from the data the JLabel will look like this ;
-
-![image](https://github.com/user-attachments/assets/a7291cf1-9b48-4f07-9284-b9d86d5d3b12)
-
-=========================================================================================
-
  <a href="https://www.linkedin.com/in/saadet-elif"/>Linkedin</a><br>
  Developed By : LzzapS3c
